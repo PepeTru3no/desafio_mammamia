@@ -10,3 +10,5 @@ Currently, two official plugins are available:
 Login:
 Email: jvinetcgmail.com
 Clave: passusername
+
+para acceder al link de cada pizza presionar ver mas del home.
