@@ -4,7 +4,7 @@ import { pizzaCart} from '../data/pizzas'
 export const CartContext = createContext();
 
 const CartProvider = ({children})=>{
-    const [cart, setCart] = useState(pizzaCart);
+    const [cart, setCart] = useState([]);
     return(        
         <CartContext.Provider value={{cart, setCart}}>
             {children}

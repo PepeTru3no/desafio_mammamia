@@ -15,12 +15,7 @@ const CardPizza = ({ pizza }) => {
   }
 
   const addToCart=()=>{
-    /* const pi= cart.filter((p)=>p.id === pizza.id);
-    const key= cart.findIndex((p)=>p.id === pizza.id); */
-    console.log(pizza.id)
-    console.log(cart);
-    const existingPizza= cart.find((p)=>p.id===pizza.id);
-    console.log(existingPizza);
+    const existingPizza= cart.find((p)=>p.id.toUpperCase()===pizza.id.toUpperCase());
     if(!existingPizza){
       const newPizza= {
         id: pizza.id, 
@@ -30,17 +25,14 @@ const CardPizza = ({ pizza }) => {
         img: pizza.img,
       };  
       setCart([...cart, newPizza]);
-      alert(`Pizza ${pizza.name.toUpperCase()} agregada al carrito `);
+      alert(`Nueva pizza ${pizza.name.toUpperCase()} agregada al carrito `);
     }else{
-      /* cart[key].count++;
-      setCart([...cart])  */ 
       const updateCart = cart.map((p)=>
-        p.id === pizza.id ? {...p, count: p.count + 1} : p
+        p.id.toUpperCase() === pizza.id.toUpperCase() ? {...p, count: p.count + 1} : p
       );
-      setCart(updateCart);
-      alert(`Pizza ${pizza.name.toUpperCase()} agregada al carrito `);
+      setCart([...updateCart]);
+      alert(`Pizza de ${pizza.name.toUpperCase()} agregada`);
     }
-    console.log(cart);
   }
   return (
     <div style={{margin:"0.5em 0.5em 0.5em 0.5em"}} className="max-w-md rounded overflow-hidden shadow-lg">
