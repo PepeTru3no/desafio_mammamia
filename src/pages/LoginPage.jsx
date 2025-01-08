@@ -1,11 +1,15 @@
-import React,{useState} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import { BiKey, BiPowerOff,BiAt } from "react-icons/bi";
+import { TokenContext } from '../context/TokenContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [email, setEmail]= useState('');
     const [clave, setClave] = useState('');
     const userName='jvinetc@gmail.com';
     const pass='passusername';
+    const {setToken} = useContext(TokenContext);
+    const navigate= useNavigate();
 
     function validaForm(){
         if(!email.trim() || !clave.trim()){
@@ -13,9 +17,10 @@ const LoginPage = () => {
             return;
         }else if(email === userName && clave === pass){
             alert("Sesion iniciada correctamente");
+            setToken(true);
             setClave('');
             setEmail('');
-            return;
+            navigate('/cart');
         }else{
             alert("El usuario o la clave no son correctos");
             setEmail('');

@@ -1,84 +1,45 @@
 import React, { useContext } from "react";
-import {
-  GiKeyLock,
-  GiCombinationLock,
-  GiPizzaSlice,
-  GiShoppingCart,
-} from "react-icons/gi";
-import { GrLogin, GrLogout } from "react-icons/gr";
-import {
-  Disclosure
-} from "@headlessui/react";
+import {GiShoppingCart,} from "react-icons/gi";
+import {Disclosure, DisclosureButton, DisclosurePanel} from "@headlessui/react";
 import { formatNumber } from "./funcionesJs.js";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CartContext } from "../context/CartContext.jsx";
-
-const token = false;
-const navigation = [
-  {
-    name: "Pizzeria Mamma Mia!",
-    href: "#",
-    current: true,
-    icon: "",
-  },
-  {
-    name: "Home",
-    href: "/",
-    current: false,
-    icon: <GiPizzaSlice size={"2em"} color="yellow" />,
-  },
-  {
-    name: token ? "Logout" : "Register",
-    href: token ? "#" : "/register",
-    current: false,
-    icon: token ? (
-      <GrLogout size={"2em"} color="yellow" />
-    ) : (
-      <GiCombinationLock size={"2em"} color="yellow" />
-    ),
-  },
-  {
-    name: token ? "Profile" : "Login",
-    href: token ? "#" : "/login",
-    current: false,
-    icon: token ? (
-      <GiKeyLock size={"2em"} color="yellow" />
-    ) : (
-      <GrLogin size={"2em"} color="yellow" />
-    ),
-  },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { navigation } from "../data/navigation.jsx"; 
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid";
+import { TokenContext } from "../context/TokenContext.jsx";
 
 const NavBar = () => {
+  const{token}= useContext(TokenContext);
+  const nav = navigation(token);
   const {cart} =useContext(CartContext);
   const calculaTotal=()=>cart.reduce((total, pizza) => total + pizza.price * pizza.count,0);
+  const setActiveClass = ({ isActive }) => (isActive ? "active" : "inactive");
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto">
         <div className="relative flex h-16 items-center justify-between">
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+              {/* Mobile menu button*/}
+              <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <span className="absolute -inset-0.5" />
+                <span className="sr-only">Open main menu</span>
+                <Bars3Icon aria-hidden="true" className="block size-6 group-data-[open]:hidden" />
+                <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-[open]:block" />
+              </DisclosureButton>
+            </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {navigation.map((item, index) => (                  
-                    <Link
+                {nav.map((item, index) => (                  
+                    <NavLink
                       style={{ display: "flex" }}
                       key={index}
                       to={item.href}
-                      aria-current={item.current ? "page" : undefined}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "rounded-md px-3 py-2 text-sm font-medium"
-                      )}
+                      className={index > 0 ? setActiveClass : 'active'}
                     >
                       {index > 0 ? item.icon : ""}
                       <span>{item.name}</span>
-                    </Link>                  
+                    </NavLink>                  
                 ))}
               </div>
             </div>
@@ -94,6 +55,21 @@ const NavBar = () => {
           </div>
         </div>
       </div>
+      <DisclosurePanel className="sm:hidden">
+        <div className="space-y-1 px-2 pb-3 pt-2">
+          {nav.map((item, index) => (                  
+                    <NavLink
+                      style={{ display: "flex" }}
+                      key={index}
+                      to={item.href}
+                      className={index > 0 ? setActiveClass : 'active'}
+                    >
+                      {index > 0 ? item.icon : ""}
+                      <span>{item.name}</span>
+                    </NavLink>                  
+                ))}
+        </div>
+      </DisclosurePanel>
     </Disclosure>
   );
 };

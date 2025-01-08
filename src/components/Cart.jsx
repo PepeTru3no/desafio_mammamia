@@ -3,9 +3,11 @@ import { formatNumber } from "./funcionesJs.js";
 import { FaPlus, FaMinus, FaTrashAlt } from "react-icons/fa";
 import { CartContext } from "../context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { TokenContext } from "../context/TokenContext.jsx";
 
 const Cart = () => {
     const {cart, setCart} = useContext(CartContext);
+    const {token} = useContext(TokenContext);
     const navigate = useNavigate();
 
     const sumarPizza = (key) => {
@@ -98,13 +100,16 @@ const Cart = () => {
                         <p>${formatNumber(calculaTotal())}.-</p>
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                        <button
-                        type="button"
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                        Pagar
-                        <span aria-hidden="true"> &rarr;</span>
+                        {token?
+                        <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                            Pagar
+                            <span aria-hidden="true"> &rarr;</span>
                         </button>
+                        :
+                        <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={()=>navigate('/login')}>
+                            Para pagar, <span className="underline underline-offset-1 text-teal-400">Iniciar Sesion</span>
+                        </button>}
+                        
                     </div>
                 </div>
             </div>

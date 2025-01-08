@@ -6,26 +6,7 @@ import {PizzaContext} from "../context/PizzaContext"
 
 const Home = () => {
   const {pizzas, isLoading, error} = useContext(PizzaContext);
-  /* const [pizzas, setPizzas] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const urlApi="http://localhost:5000/api/pizzas";
-  useEffect(() => {
-    setIsLoading(false);
-    const getData=async()=>{
-      try {
-        const response = await axios.get(urlApi);
-        const data = response.data;
-        setPizzas([...data]);
-      } catch (error) {
-        setError(error);
-      }finally{
-        setIsLoading(false);
-      }    
-    }
-    getData();
-    
-  }, []); */
+  
   return (
     <>
       <Header />

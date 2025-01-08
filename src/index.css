@@ -8,4 +8,11 @@
     align-items: center;
     color: aliceblue;
 }
+.active{
+    color: aqua;
+}
+
+.inactive{
+    color: bisque;
+}
 

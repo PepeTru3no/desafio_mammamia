@@ -9,8 +9,13 @@ import LoginPage from './pages/LoginPage'
 import NotFound from './pages/NotFound'
 import CartProvider from './context/CartContext'
 import PizzaProvider from './context/PizzaContext'
+import { useContext } from 'react'
+import { TokenContext } from './context/TokenContext'
+import ProfilePage from './pages/ProfilePage'
+import LogoutPage from './pages/LogoutPage'
 
 function App() {
+  const {token}= useContext(TokenContext);
   return (
     <>
       <CartProvider>
@@ -20,8 +25,10 @@ function App() {
             <Routes>
               <Route path='/' element={<Home/>}/>
               <Route path='/cart' element={<Cart/>}/>
-              <Route path='/register' element={<RegisterPage/>}/>
-              <Route path='/login' element={<LoginPage/>}/>
+              <Route path='/register' element={token?<Home/>:<RegisterPage/> }/>
+              <Route path='/login' element={token?<Home/>:<LoginPage/>}/>
+              <Route path='/logout' element={<LogoutPage/>}/>
+              <Route path='/profile' element={token?<ProfilePage/>: <LoginPage/>}/>
               <Route path='/pizza/:id' element={<Pizza/>}/>
               <Route path='*' element={<NotFound/>}/>
             </Routes>
