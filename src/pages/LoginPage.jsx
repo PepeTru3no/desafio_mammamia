@@ -1,39 +1,30 @@
 import React,{useContext, useEffect, useState} from 'react'
 import { BiKey, BiPowerOff,BiAt } from "react-icons/bi";
-import { TokenContext } from '../context/TokenContext';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 const LoginPage = () => {
     const [email, setEmail]= useState('');
     const [clave, setClave] = useState('');
-    const userName='jvinetc@gmail.com';
-    const pass='passusername';
-    const {setToken} = useContext(TokenContext);
+    const { login } = useContext(UserContext);
     const navigate= useNavigate();
 
     function validaForm(){
         if(!email.trim() || !clave.trim()){
             alert("Todos los campos deben ser completados");
             return;
-        }else if(email === userName && clave === pass){
-            alert("Sesion iniciada correctamente");
-            setToken(true);
-            setClave('');
-            setEmail('');
-            navigate('/cart');
         }else{
-            alert("El usuario o la clave no son correctos");
+            login({'email':email, 'pass': clave})
             setEmail('');
             setClave('');
-            return;
         }
         
     }
     
     function mideClave(){
-        if(clave.length <6){
+        if(clave.length < 6){
             alert("La clave debe tener al menos 6 caracteres");
-            return
+            return;
         }
     }
 

@@ -1,11 +1,13 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { BiKey, BiPowerOff,BiAt } from "react-icons/bi";
+import { UserContext } from '../context/UserContext';
 
 const RegisterPage = () => {
     const [email, setEmail]= useState('');
     const [clave, setClave] = useState('');
     const [confClave, setConfClave] = useState('');
     const [error, setError] = useState(false);
+    const { register } = useContext(UserContext);
 
     function validaForm(){
         if(!email.trim() || !clave.trim() || !confClave.trim()){
@@ -13,7 +15,7 @@ const RegisterPage = () => {
             return;
         }else{
             compararClave();
-            alert("Formulario enviado correctamente");
+            register({'email':email, 'pass': clave})
             setEmail('');
             setClave('');
             setConfClave('');

@@ -1,19 +1,13 @@
 import React, { useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { TokenContext } from '../context/TokenContext';
+import { UserContext } from '../context/UserContext';
 
 const LogoutPage = () => {
-    const navigate = useNavigate();
-    const {setToken} = useContext(TokenContext);
+    const {logOut} = useContext(UserContext);
 
     useEffect(() => {
-        const logOut=()=>{
-            alert('Cerrando sesion.')
-            setToken(false);
-            navigate('/');
-        }
         
-        return logOut;
+        return logOut();
+
     }, []);
 
     

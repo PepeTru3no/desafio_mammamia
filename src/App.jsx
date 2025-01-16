@@ -10,12 +10,12 @@ import NotFound from './pages/NotFound'
 import CartProvider from './context/CartContext'
 import PizzaProvider from './context/PizzaContext'
 import { useContext } from 'react'
-import { TokenContext } from './context/TokenContext'
 import ProfilePage from './pages/ProfilePage'
 import LogoutPage from './pages/LogoutPage'
+import { UserContext } from './context/UserContext'
 
 function App() {
-  const {token}= useContext(TokenContext);
+  const {token}= useContext(UserContext);
   return (
     <>
       <CartProvider>

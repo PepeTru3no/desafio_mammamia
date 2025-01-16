@@ -4,13 +4,16 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import TokenProvider from './context/TokenContext.jsx'
+import UserProvider from './context/UserContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <TokenProvider>
-      <BrowserRouter future={{ v7_startTransition: true }}>
-        <App />
-      </BrowserRouter>
-    </TokenProvider>
+    <BrowserRouter future={{ v7_startTransition: true }}>
+      <UserProvider>
+        <TokenProvider>        
+            <App />        
+        </TokenProvider>
+      </UserProvider>
+    </BrowserRouter>
   </StrictMode>,
 )

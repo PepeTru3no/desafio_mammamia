@@ -3,11 +3,11 @@ import { formatNumber } from "./funcionesJs.js";
 import { FaPlus, FaMinus, FaTrashAlt } from "react-icons/fa";
 import { CartContext } from "../context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
-import { TokenContext } from "../context/TokenContext.jsx";
+import axios from "axios";
 
 const Cart = () => {
     const {cart, setCart} = useContext(CartContext);
-    const {token} = useContext(TokenContext);
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const sumarPizza = (key) => {
@@ -31,6 +31,31 @@ const Cart = () => {
     };
 
     const calculaTotal=()=>cart.reduce((total, pizza) => total + pizza.price * pizza.count,0);
+
+    const pagar= ()=>{
+        const url ='http://localhost:5000/api/checkouts';
+        const carrito= cart;
+        axios.post(
+            url,{
+                cart: carrito
+            },
+            {headers: {
+                "Content-Type": "application/json",
+                Authorization : `Bearer ${token}`
+                }
+            }
+        )
+        .then((response) => {
+            console.log(response.data);
+            setCart([]);
+            alert('Pago realizado satisfactoriamente')
+            navigate('/');
+        }
+        ).catch(function (error) {
+            console.log(error);
+            alert('pago no realizado');
+        });;
+    }
     
     return (
         <>  
@@ -101,7 +126,7 @@ const Cart = () => {
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         {token?
-                        <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                        <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={pagar}>
                             Pagar
                             <span aria-hidden="true"> &rarr;</span>
                         </button>

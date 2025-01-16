@@ -6,10 +6,10 @@ import { Link, NavLink } from "react-router-dom";
 import { CartContext } from "../context/CartContext.jsx";
 import { navigation } from "../data/navigation.jsx"; 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid";
-import { TokenContext } from "../context/TokenContext.jsx";
+import { UserContext } from "../context/UserContext.jsx";
 
 const NavBar = () => {
-  const{token}= useContext(TokenContext);
+  const { token } = useContext(UserContext)
   const nav = navigation(token);
   const {cart} =useContext(CartContext);
   const calculaTotal=()=>cart.reduce((total, pizza) => total + pizza.price * pizza.count,0);
