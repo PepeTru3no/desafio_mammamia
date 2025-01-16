@@ -8,5 +8,4 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 Login:
-Email: jvinetcgmail.com
-Clave: passusername
+ahora son las credenciales dadas en el backend de apoyo
